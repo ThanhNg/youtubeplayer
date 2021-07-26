@@ -91,7 +91,7 @@
             if (player && player.getPlayerState() == YT.PlayerState.PLAYING) {
                 document.getElementById('player').style.opacity = "1";
             }
-            sendMessage({ 'event': 'playerStateChanged', 'data': event.data });
+            jsBridge.triggerOnStateChanged(event.data);
         }
 
         function getCurrentTime() {
