@@ -90,7 +90,7 @@
             if (player && player.getPlayerState() == YT.PlayerState.PLAYING) {
                 document.getElementById('player').style.opacity = "1";
             }
-            jsBridge.triggerOnStateChanged(event.data);
+            if (jsBridge) jsBridge.triggerOnStateChanged(event.data);
         }
 
         function getCurrentTime() {
