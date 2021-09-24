@@ -90,7 +90,7 @@
         }
 
         function onPlayerStateChange(event) {
-            if (player && player.getPlayerState() == YT.PlayerState.PLAYING) {
+            if (player && event.data == YT.PlayerState.PLAYING) {
                 document.getElementById('player').style.opacity = "1";
             }
             jsBridge.triggerOnStateChanged(event.data);
