@@ -43,6 +43,7 @@
         var player;
         var timer;
         var error = false;
+        var lastState = 0;
         var url = new URL(window.location.href);
 
         function sendMessage(message) {
@@ -62,7 +63,7 @@
                     'playsinline': 1,
                     'autoplay': 1,
                     'controls': 0,
-                    'origin': "http://www.youtube.com",
+                    'origin': "https://thanhng.github.io",
                     'iv_load_policy': 3,
                     'cc_load_policy': 3,
                     'cc_lang_policy': 3,
@@ -93,11 +94,12 @@
             if (player && event.data == YT.PlayerState.PLAYING) {
                 document.getElementById('player-iframe').style.opacity = "1";
             }
+            lastState = event.data;
             jsBridge.triggerOnStateChanged(event.data);
         }
 
         function getCurrentTime() {
-            if (player && player.getPlayerState() == YT.PlayerState.PLAYING) {
+            if (player && lastState == YT.PlayerState.PLAYING) {
                 let time = player.getCurrentTime();
                 jsBridge.triggerOnPlaying(time);
             }
