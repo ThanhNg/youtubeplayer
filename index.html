@@ -28,7 +28,7 @@
             height: 100% !important;
         }
 
-        #player {
+        #player-iframe {
             opacity: 0; 
             transition: opacity 0.2s;
         }
@@ -36,7 +36,7 @@
 </head>
 <body>
     <div id="video-container">
-        <div id="player"></div>
+        <div id="player-iframe"></div>
     </div>
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
@@ -54,7 +54,7 @@
         }
 
         YT.ready(function () {
-            player = new YT.Player('player', {
+            player = new YT.Player('player-iframe', {
                 height: '390',
                 width: '640',
                 videoId: videoId,
@@ -91,7 +91,7 @@
 
         function onPlayerStateChange(event) {
             if (player && event.data == YT.PlayerState.PLAYING) {
-                document.getElementById('player').style.opacity = "1";
+                document.getElementById('player-iframe').style.opacity = "1";
             }
             jsBridge.triggerOnStateChanged(event.data);
         }
