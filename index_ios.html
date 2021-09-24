@@ -31,12 +31,13 @@
 </head>
 <body>
     <div id="video-container">
-        <div id="player"></div>
+        <div id="player-iframe"></div>
     </div>
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
         var player;
         var timer;
+        var lastState = 0;
         var error = false;
         //var url = new URL(window.location.href);
 
@@ -49,7 +50,7 @@
         }
 
         YT.ready(function () {
-            player = new YT.Player('player', {
+            player = new YT.Player('player-iframe', {
                 width: '640',
                 height: '390',
                 videoId: videoId,
@@ -84,11 +85,12 @@
         }
 
         function onPlayerStateChange(event) {
+            lastState = event.data;
             sendMessage({ 'event': 'playerStateChanged', 'data': event.data });
         }
 
         function getCurrentTime() {
-            if (player && player.getPlayerState() == YT.PlayerState.PLAYING) {
+            if (player && lastState == YT.PlayerState.PLAYING) {
                 let time = player.getCurrentTime();
                 sendMessage({ 'event': 'playerPlayTime', 'data': time });
             }
