@@ -44,6 +44,7 @@
         var timer;
         var error = false;
         var lastState = 0;
+        var shouldStop = false;
         var url = new URL(window.location.href);
 
         function sendMessage(message) {
@@ -85,7 +86,7 @@
         });
 
         function onPlayerReady(event) {
-            event.target.playVideo();
+            if (!shouldStop) event.target.playVideo();
             
             //sendMessage({'event': 'playerReady', 'data': event.data });
         }
@@ -107,27 +108,27 @@
         }
 
         function playVideo() {
-            if (player) player.playVideo();
+            if (player && typeof player.playVideo == "function") player.playVideo();
         }
 
         function seekTo(seconds) {
-            if (player) player.seekTo(seconds);
+            if (player && typeof player.seekTo == "function") player.seekTo(seconds);
         }
 
         function setRate(rate) {
-            if (player) player.setPlaybackRate(rate);
+            if (player && typeof player.setPlaybackRate == "function") player.setPlaybackRate(rate);
         }
 
         function stopVideo() {
-            if (player) player.stopVideo();
+            if (player && typeof player.stopVideo == "function") player.stopVideo();
         }
 
         function pauseVideo() {
-            if (player) player.pauseVideo();
+            if (player && typeof player.pauseVideo == "function") player.pauseVideo();
         }
 
         function loadVideo(id) {
-            if (player) player.loadVideoById(id);
+            if (player && typeof player.loadVideoById == "function") player.loadVideoById(id);
         }
 
         window.onresize = function () {
