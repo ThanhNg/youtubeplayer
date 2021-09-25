@@ -120,7 +120,7 @@
         }
 
         function stopVideo() {
-            if (player && typeof player.stopVideo == "function") player.stopVideo();
+            if (player && player.stopVideo && typeof player.stopVideo == "function") player.stopVideo();
         }
 
         function pauseVideo() {
