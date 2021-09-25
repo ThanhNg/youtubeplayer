@@ -67,7 +67,6 @@
                     'origin': "http://www.youtube.com",
                     'iv_load_policy': 3,
                     'cc_load_policy': 3,
-                    'cc_lang_ref': 'He',
                     'modestbranding': 1,
                     'playlist': videoId,
                     'start': start
@@ -93,6 +92,9 @@
 
         function onPlayerStateChange(event) {
             if (player && event.data == YT.PlayerState.PLAYING) {
+                if (shouldStop) {
+                    stopVideo();
+                }
                 document.getElementById('player-iframe').style.opacity = "1";
             }
             lastState = event.data;
@@ -101,6 +103,9 @@
 
         function getCurrentTime() {
             if (player && lastState == YT.PlayerState.PLAYING) {
+                if (shouldStop) {
+                    stopVideo();
+                }
                 let time = player.getCurrentTime();
                 jsBridge.triggerOnPlaying(time);
             }
@@ -120,6 +125,7 @@
         }
 
         function stopVideo() {
+            shouldStop = true;
             if (player && player.stopVideo && typeof player.stopVideo == "function") player.stopVideo();
         }
 
