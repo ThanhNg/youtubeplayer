@@ -46,6 +46,9 @@
         var lastState = 0;
         var shouldStop = false;
         var url = new URL(window.location.href);
+        var videoId = url.searchParams.get("videoId");
+        var start = url.searchParams.get("start");
+        var end = url.searchParams.get("end");
 
         function sendMessage(message) {
             if (window) {
@@ -126,7 +129,7 @@
 
         function stopVideo() {
             shouldStop = true;
-            if (player && player.stopVideo && typeof player.stopVideo == "function") player.stopVideo();
+            if (player && typeof player.stopVideo == "function") player.stopVideo();
         }
 
         function pauseVideo() {
