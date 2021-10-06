@@ -99,23 +99,23 @@
         }
 
         function playVideo() {
-            if (player && typeof player.playVideo == "function") player.playVideo();
+            if (player && player.playVideo && typeof player.playVideo == "function") player.playVideo();
         }
 
         function seekTo(seconds) {
-            if (player && typeof player.seekTo == "function") player.seekTo(seconds);
+            if (player && player.seekTo && typeof player.seekTo == "function") player.seekTo(seconds);
         }
 
         function stopVideo() {
-            if (player && typeof player.stopVideo == "function") player.stopVideo();
+            if (player && player.stopVideo && typeof player.stopVideo == "function") player.stopVideo();
         }
 
         function pauseVideo() {
-            if (player && typeof player.pauseVideo == "function") player.pauseVideo();
+            if (player && player.pauseVideo && typeof player.pauseVideo == "function") player.pauseVideo();
         }
 
         function setRate(rate) {
-            if (player && typeof player.setPlaybackRate == "function") player.setPlaybackRate(rate);
+            if (player && player.setPlaybackRate && typeof player.setPlaybackRate == "function") player.setPlaybackRate(rate);
         }
 
         function loadVideo(id) {
