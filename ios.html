@@ -38,6 +38,8 @@
         var player;
         var timer;
         var lastState = 0;
+        var shouldStop = false;
+        var shouldPause = false;
         var error = false;
         var url = new URL(window.location.href);
         var videoId = url.searchParams.get("videoId");
@@ -85,23 +87,38 @@
         });
 
         function onPlayerReady(event) {
-            event.target.playVideo();
+            if (!shouldStop && !shouldPause) event.target.playVideo();
             sendMessage({'event': 'playerReady', 'data': event.data });
         }
 
         function onPlayerStateChange(event) {
+            if (player && event.data == YT.PlayerState.PLAYING) {
+                ensureState();
+            }
             lastState = event.data;
             sendMessage({ 'event': 'playerStateChanged', 'data': event.data });
         }
 
         function getCurrentTime() {
             if (player && lastState == YT.PlayerState.PLAYING) {
+                ensureState();
                 let time = player.getCurrentTime();
                 sendMessage({ 'event': 'playerPlayTime', 'data': time });
             }
         }
+        
+        function ensureState() {
+            if (shouldStop) {
+                stopVideo();
+            }
+            if (shouldPause) {
+                pauseVideo();
+            }
+        }
 
         function playVideo() {
+            shouldStop = false;
+            shouldPause = false;
             if (player && typeof player.playVideo == "function") player.playVideo();
         }
 
@@ -110,10 +127,12 @@
         }
 
         function stopVideo() {
+            shouldStop = true;
             if (player && typeof player.stopVideo == "function") player.stopVideo();
         }
 
         function pauseVideo() {
+            shouldPause = true;
             if (player && typeof player.pauseVideo == "function") player.pauseVideo();
         }
 
