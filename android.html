@@ -45,6 +45,7 @@
         var error = false;
         var lastState = 0;
         var shouldStop = false;
+        var shouldPause = false;
         var url = new URL(window.location.href);
         var videoId = url.searchParams.get("videoId");
         var start = url.searchParams.get("start");
@@ -88,16 +89,14 @@
         });
 
         function onPlayerReady(event) {
-            if (!shouldStop) event.target.playVideo();
+            if (!shouldStop && !shouldPause) event.target.playVideo();
             
             //sendMessage({'event': 'playerReady', 'data': event.data });
         }
 
         function onPlayerStateChange(event) {
             if (player && event.data == YT.PlayerState.PLAYING) {
-                if (shouldStop) {
-                    stopVideo();
-                }
+                ensureState();
                 document.getElementById('player-iframe').style.opacity = "1";
             }
             lastState = event.data;
@@ -106,16 +105,21 @@
 
         function getCurrentTime() {
             if (player && lastState == YT.PlayerState.PLAYING) {
-                if (shouldStop) {
-                    stopVideo();
-                }
+                ensureState();                
                 let time = player.getCurrentTime();
                 jsBridge.triggerOnPlaying(time);
             }
 
         }
 
+        function ensureState() {
+            if (shouldStop) stopVideo();
+            if (shouldPause) pauseVideo();
+        }
+        
         function playVideo() {
+            shouldStop = false;
+            shouldPause = false;
             if (player && typeof player.playVideo == "function") player.playVideo();
         }
 
@@ -133,6 +137,7 @@
         }
 
         function pauseVideo() {
+            shouldPause = true;
             if (player && typeof player.pauseVideo == "function") player.pauseVideo();
         }
 
