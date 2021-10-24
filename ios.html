@@ -36,6 +36,7 @@
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
         var player;
+        var initialized = false;
         var timer;
         var lastState = 0;
         var shouldStop = false;
@@ -81,6 +82,8 @@
             });
 
             player.setSize(window.innerWidth, window.innerHeight);
+            
+            initialized = true;
 
             // Get player play time
             timer = window.setInterval(getCurrentTime, 500);
@@ -119,29 +122,29 @@
         function playVideo() {
             shouldStop = false;
             shouldPause = false;
-            if (player && player.playVideo && typeof player.playVideo == "function") player.playVideo();
+            if (initialized) player.playVideo();
         }
 
         function seekTo(seconds) {
-            if (player && player.seekTo && typeof player.seekTo == "function") player.seekTo(seconds);
+            if (initialized) player.seekTo(seconds);
         }
 
         function stopVideo() {
             shouldStop = true;
-            if (player && player.stopVideo && typeof player.stopVideo == "function") player.stopVideo();
+            if (initialized) player.stopVideo();
         }
 
         function pauseVideo() {
             shouldPause = true;
-            if (player && player.pauseVideo && typeof player.pauseVideo == "function") player.pauseVideo();
+            if (initialized) player.pauseVideo();
         }
 
         function setRate(rate) {
-            if (player && player.setPlaybackRate && typeof player.setPlaybackRate == "function") player.setPlaybackRate(rate);
+            if (initialized) player.setPlaybackRate(rate);
         }
 
         function loadVideo(id) {
-            if (player) player.loadVideoById(id);
+            if (initialized) player.loadVideoById(id);
         }
 
         window.onresize = function () {
