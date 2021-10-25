@@ -43,6 +43,7 @@
         var player;
         var timer;
         var error = false;
+        var initialized = false;
         var lastState = 0;
         var shouldStop = false;
         var shouldPause = false;
@@ -51,13 +52,6 @@
         var start = url.searchParams.get("start");
         var end = url.searchParams.get("end");
 
-        function sendMessage(message) {
-            if (window) {
-                //window.postMessage({
-                //    message
-                //});
-            }
-        }
 
         YT.ready(function () {
             player = new YT.Player('player-iframe', {
@@ -83,6 +77,8 @@
             });
 
             player.setSize(window.innerWidth, window.innerHeight);
+            
+            initialized = true;
 
             // Get player play time
             timer = window.setInterval(getCurrentTime, 500);
@@ -120,29 +116,29 @@
         function playVideo() {
             shouldStop = false;
             shouldPause = false;
-            if (player && typeof player.playVideo == "function") player.playVideo();
+            if (initialized) player.playVideo();
         }
 
         function seekTo(seconds) {
-            if (player && typeof player.seekTo == "function") player.seekTo(seconds);
+            if (initialized) player.seekTo(seconds);
         }
 
         function setRate(rate) {
-            if (player && typeof player.setPlaybackRate == "function") player.setPlaybackRate(rate);
+            if (initialized) player.setPlaybackRate(rate);
         }
 
         function stopVideo() {
             shouldStop = true;
-            if (player && typeof player.stopVideo == "function") player.stopVideo();
+            if (initialized) player.stopVideo();
         }
 
         function pauseVideo() {
             shouldPause = true;
-            if (player && typeof player.pauseVideo == "function") player.pauseVideo();
+            if (initialized) player.pauseVideo();
         }
 
         function loadVideo(id) {
-            if (player && typeof player.loadVideoById == "function") player.loadVideoById(id);
+            if (initialized) player.loadVideoById(id);
         }
 
         window.onresize = function () {
