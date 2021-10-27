@@ -123,24 +123,29 @@
             shouldStop = false;
             shouldPause = false;
             if (initialized) player.playVideo();
+            return true;
         }
 
         function seekTo(seconds) {
             if (initialized) player.seekTo(seconds);
+            return true;
         }
 
         function stopVideo() {
             shouldStop = true;
             if (initialized) player.stopVideo();
+            return true;
         }
 
         function pauseVideo() {
             shouldPause = true;
             if (initialized) player.pauseVideo();
+            return true;
         }
 
         function setRate(rate) {
             if (initialized) player.setPlaybackRate(rate);
+            return true;
         }
 
         function loadVideo(id) {
