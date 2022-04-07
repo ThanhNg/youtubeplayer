@@ -29,8 +29,8 @@
         }
 
         #player-iframe {
-            //opacity: 0; 
-            //transition: opacity 0.2s;
+            opacity: 0; 
+            transition: opacity 0.2s;
         }
     </style>
 </head>
@@ -62,7 +62,7 @@
                     'playsinline': 1,
                     'autoplay': 1,
                     'controls': 0,
-                    'origin': "https://thanhng.github.io",
+                    'origin': "http://www.youtube.com",
                     'widget_referrer': "https://thanhng.github.io",
                     'iv_load_policy': 3,
                     'cc_load_policy': 3,
@@ -89,14 +89,14 @@
         function onPlayerReady(event) {
             //if (jsBridge) jsBridge.triggerOnReady();
           
-            //event.target.playVideo();
-            setTimeout(function() { player.playVideo(), 1000 });
+            event.target.playVideo();
+            //setTimeout(function() { player.playVideo(), 1000 });
         }
 
         function onPlayerStateChange(event) {
             if (player && event.data == YT.PlayerState.PLAYING) {
                 //ensureState();
-                //document.getElementById('player-iframe').style.opacity = "1";
+                document.getElementById('player-iframe').style.opacity = "1";
             }
             lastState = event.data;
             //if (jsBridge) jsBridge.triggerOnStateChanged(event.data);
