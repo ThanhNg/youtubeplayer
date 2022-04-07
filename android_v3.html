@@ -87,9 +87,8 @@
         });
 
         function onPlayerReady(event) {
-            if (jsBridge) jsBridge.triggerOnReady();
-          
             event.target.playVideo();
+            if (jsBridge) jsBridge.triggerOnReady();
         }
 
         function onPlayerStateChange(event) {
