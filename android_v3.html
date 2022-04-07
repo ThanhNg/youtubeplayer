@@ -88,12 +88,12 @@
         function onPlayerReady(event) {
             if (jsBridge) jsBridge.triggerOnReady();
           
-            if (!shouldStop && !shouldPause) event.target.playVideo();
+            event.target.playVideo();
         }
 
         function onPlayerStateChange(event) {
             if (player && event.data == YT.PlayerState.PLAYING) {
-                ensureState();
+                //ensureState();
                 document.getElementById('player-iframe').style.opacity = "1";
             }
             lastState = event.data;
