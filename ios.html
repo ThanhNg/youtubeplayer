@@ -90,7 +90,7 @@
         });
 
         function onPlayerReady(event) {
-            if (!shouldStop && !shouldPause) event.target.playVideo();
+            event.target.playVideo();
             sendMessage({'event': 'playerReady', 'data': event.data });
         }
 
