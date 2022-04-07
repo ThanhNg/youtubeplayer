@@ -89,7 +89,8 @@
         function onPlayerReady(event) {
             //if (jsBridge) jsBridge.triggerOnReady();
           
-            event.target.playVideo();
+            //event.target.playVideo();
+            setTimeout(function() { player.playVideo(), 100 });
         }
 
         function onPlayerStateChange(event) {
