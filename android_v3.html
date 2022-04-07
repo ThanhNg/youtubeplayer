@@ -87,7 +87,7 @@
         });
 
         function onPlayerReady(event) {
-            if (jsBridge) jsBridge.triggerOnReady();
+            //if (jsBridge) jsBridge.triggerOnReady();
           
             event.target.playVideo();
         }
@@ -98,14 +98,14 @@
                 document.getElementById('player-iframe').style.opacity = "1";
             }
             lastState = event.data;
-            if (jsBridge) jsBridge.triggerOnStateChanged(event.data);
+            //if (jsBridge) jsBridge.triggerOnStateChanged(event.data);
         }
 
         function getCurrentTime() {
             if (player && lastState == YT.PlayerState.PLAYING) {
-                ensureState();                
+                //ensureState();                
                 let time = player.getCurrentTime();
-                if (jsBridge) jsBridge.triggerOnPlaying(time);
+                //if (jsBridge) jsBridge.triggerOnPlaying(time);
             }
 
         }
