@@ -29,8 +29,7 @@
         }
 
         #player-iframe {
-            opacity: 0; 
-            transition: opacity 0.2s;
+            opacity: 1; 
         }
     </style>
 </head>
@@ -94,7 +93,6 @@
         function onPlayerStateChange(event) {
             if (player && event.data == YT.PlayerState.PLAYING) {
                 ensureState();
-                document.getElementById('player-iframe').style.opacity = "1";
             }
             lastState = event.data;
             if (jsBridge) jsBridge.triggerOnStateChanged(event.data);
