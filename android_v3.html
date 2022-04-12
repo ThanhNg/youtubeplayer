@@ -48,7 +48,6 @@
         var start = url.searchParams.get("start");
         var end = url.searchParams.get("end");
         
-        window["YTConfig"] = {"host": "https://thanhng.github.io"};
         var tag = document.createElement('script');
 
         tag.src = "https://www.youtube.com/iframe_api";
@@ -65,8 +64,7 @@
                     'playsinline': 1,
                     'autoplay': 1,
                     'controls': 0,
-                    'origin': "https://thanhng.github.io",
-                    'widget_referrer': "https://thanhng.github.io",
+                    'origin': "http://www.youtube.com",
                     'iv_load_policy': 3,
                     'cc_load_policy': 3,
                     'modestbranding': 1,
