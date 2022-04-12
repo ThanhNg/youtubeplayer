@@ -47,6 +47,7 @@
         var shouldStop = false;
         var shouldPause = false;
         var url = new URL(window.location.href);
+        var host = location.protocol + '//' + location.host;
         var videoId = url.searchParams.get("videoId");
         var start = url.searchParams.get("start");
         var end = url.searchParams.get("end");
@@ -61,8 +62,7 @@
                     'playsinline': 1,
                     'autoplay': 1,
                     'controls': 0,
-                    'origin': "https://thanhng.github.io",
-                    'widget_referrer': "https://thanhng.github.io",
+                    'origin': host,
                     'iv_load_policy': 3,
                     'cc_load_policy': 3,
                     'modestbranding': 1,
