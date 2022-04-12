@@ -34,101 +34,49 @@
 </head>
 <body>
     <div id="video-container">
-        <iframe id="player-iframe"></iframe>
+        <div id="player"></div>
     </div>
-    <script src="https://www.youtube.com/iframe_api"></script>
-    <script>
-        var player;
-        var timer;
-        var error = false;
-        var initialized = false;
-        var lastState = 0;
-        var shouldStop = false;
-        var shouldPause = false;
-        var url = new URL(window.location.href);
-        var host = location.protocol + '//' + location.host;
-        var videoId = url.searchParams.get("videoId");
-        var start = url.searchParams.get("start");
-        var end = url.searchParams.get("end");
+  <script>
+      // 2. This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement('script');
 
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-        YT.ready(function () {
-            player = new YT.Player('player-iframe', {
-                height: '390',
-                width: '640',
-                videoId: videoId,
-                playerVars: {
-                    'playsinline': 1,
-                    'autoplay': 1,
-                    'controls': 0,
-                    'origin': 'https://www.youtube.com',
-                    'modestbranding': 1,
-                    'playlist': videoId,
-                    'start': start,
-                    'end': end,
-                    'loop': 1
-                },
-                events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-
-            player.setSize(window.innerWidth, window.innerHeight);
-            
-            initialized = true;
-
-            // Get player play time
-            timer = window.setInterval(getCurrentTime, 300);
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '390',
+          width: '640',
+          videoId: 'tWQPbHXyoFQ',
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
         });
+      }
 
-        function onPlayerReady(event) {
-            event.target.playVideo();
-        }
+      // 4. The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+        event.target.playVideo();
+      }
 
-        function onPlayerStateChange(event) {
-            lastState = event.data;
+      // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+      var done = false;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+          setTimeout(stopVideo, 6000);
+          done = true;
         }
-
-        function getCurrentTime() {
-            if (player && lastState == YT.PlayerState.PLAYING) {               
-                let time = player.getCurrentTime();
-            }
-
-        }
-
-        function ensureState() {
-            if (shouldStop) stopVideo();
-            if (shouldPause) pauseVideo();
-        }
-        
-        function playVideo() {
-            player.playVideo();
-        }
-
-        function seekTo(seconds) {
-            player.seekTo(seconds);
-        }
-
-        function setRate(rate) {
-            player.setPlaybackRate(rate);
-        }
-
-        function stopVideo() {
-            player.stopVideo();
-        }
-
-        function pauseVideo() {
-            player.pauseVideo();
-        }
-
-        function loadVideo(id) {
-            player.loadVideoById(id);
-        }
-
-        window.onresize = function () {
-            if (player) player.setSize(window.innerWidth, window.innerHeight);
-        }
+      }
+      function stopVideo() {
+        player.stopVideo();
+      }
     </script>
 </body>
 </html>
