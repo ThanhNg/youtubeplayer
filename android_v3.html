@@ -7,7 +7,6 @@
             margin: 0;
             width: 100%;
             height: 100%;
-            background: #000000 url('loading.gif') no-repeat center center;
             overflow: hidden;
         }
 
@@ -87,22 +86,15 @@
 
         function onPlayerReady(event) {
             event.target.playVideo();
-            if (jsBridge) jsBridge.triggerOnReady();
         }
 
         function onPlayerStateChange(event) {
-            if (player && event.data == YT.PlayerState.PLAYING) {
-                ensureState();
-            }
             lastState = event.data;
-            if (jsBridge) jsBridge.triggerOnStateChanged(event.data);
         }
 
         function getCurrentTime() {
-            if (player && lastState == YT.PlayerState.PLAYING) {
-                ensureState();                
+            if (player && lastState == YT.PlayerState.PLAYING) {               
                 let time = player.getCurrentTime();
-                if (jsBridge) jsBridge.triggerOnPlaying(time);
             }
 
         }
@@ -113,31 +105,27 @@
         }
         
         function playVideo() {
-            shouldStop = false;
-            shouldPause = false;
-            if (initialized) player.playVideo();
+            player.playVideo();
         }
 
         function seekTo(seconds) {
-            if (initialized) player.seekTo(seconds);
+            player.seekTo(seconds);
         }
 
         function setRate(rate) {
-            if (initialized) player.setPlaybackRate(rate);
+            player.setPlaybackRate(rate);
         }
 
         function stopVideo() {
-            shouldStop = true;
-            if (initialized) player.stopVideo();
+            player.stopVideo();
         }
 
         function pauseVideo() {
-            shouldPause = true;
-            if (initialized) player.pauseVideo();
+            player.pauseVideo();
         }
 
         function loadVideo(id) {
-            if (initialized) player.loadVideoById(id);
+            player.loadVideoById(id);
         }
 
         window.onresize = function () {
