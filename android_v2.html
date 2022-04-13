@@ -49,8 +49,8 @@
         var shouldPause = false;
         var url = new URL(window.location.href);
         var videoId = url.searchParams.get("videoId");
-        var start = url.searchParams.get("start");
-        var end = url.searchParams.get("end");
+        var start = parseInt(url.searchParams.get("start"));
+        var end = parseInt(url.searchParams.get("end"));
 
 
         YT.ready(function () {
@@ -66,7 +66,6 @@
                     'iv_load_policy': 3,
                     'cc_load_policy': 3,
                     'modestbranding': 1,
-                    'playlist': videoId,
                     'start': start,
                     'end': end,
                     'loop': 1
@@ -86,9 +85,9 @@
         });
 
         function onPlayerReady(event) {
-            if (jsBridge) jsBridge.triggerOnReady();
-          
             if (!shouldStop && !shouldPause) event.target.playVideo();
+            
+            if (jsBridge) jsBridge.triggerOnReady();
         }
 
         function onPlayerStateChange(event) {
@@ -96,15 +95,24 @@
                 ensureState();
                 document.getElementById('player-iframe').style.opacity = "1";
             }
+            else if (player && event.data == YT.PlayerState.ENDED) {
+                player.seekTo(start, true);
+            }
+            
             lastState = event.data;
             if (jsBridge) jsBridge.triggerOnStateChanged(event.data);
         }
 
         function getCurrentTime() {
             if (player && lastState == YT.PlayerState.PLAYING) {
-                ensureState();                
+                ensureState();    
+                
                 let time = player.getCurrentTime();
-                if (jsBridge) jsBridge.triggerOnPlaying(time);
+                if (jsBridge) jsBridge.triggerOnPlaying(time);  
+                // Manual loop
+                if (time > end) {
+                    player.seekTo(start, true);
+                }
             }
 
         }
