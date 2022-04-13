@@ -96,8 +96,13 @@
             if (player && event.data == YT.PlayerState.PLAYING) {
                 ensureState();
             }
+            else if (player && event.data == YT.PlayerState.ENDED) {
+                player.seekTo(start, true);
+            }
+           
             lastState = event.data;
             sendMessage({ 'event': 'playerStateChanged', 'data': event.data });
+             
         }
 
         function getCurrentTime() {
