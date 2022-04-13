@@ -44,8 +44,8 @@
         var error = false;
         var url = new URL(window.location.href);
         var videoId = url.searchParams.get("videoId");
-        var start = url.searchParams.get("start");
-        var end = url.searchParams.get("end");
+        var start = parseInt(url.searchParams.get("start"));
+        var end = parseInt(url.searchParams.get("end"));
 
         function sendMessage(message) {
             if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.message) {
@@ -60,7 +60,6 @@
                 width: '640',
                 height: '390',
                 videoId: videoId,
-                playlist: videoId,
                 playerVars: {
                     'playsinline': 1,
                     'autoplay': 1,
@@ -106,6 +105,10 @@
                 ensureState();
                 let time = player.getCurrentTime();
                 sendMessage({ 'event': 'playerPlayTime', 'data': time });
+                // Manual loop
+                if (time > end) {
+                    player.seekTo(start, true);
+                }
             }
         }
         
