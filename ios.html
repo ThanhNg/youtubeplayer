@@ -130,29 +130,29 @@
             shouldStop = false;
             shouldPause = false;
             if (initialized) player.playVideo();
-            return true;
+            return 'true';
         }
 
         function seekTo(seconds) {
             if (initialized) player.seekTo(seconds);
-            return true;
+            return 'true';
         }
 
         function stopVideo() {
             shouldStop = true;
             if (initialized) player.stopVideo();
-            return true;
+            return 'true';
         }
 
         function pauseVideo() {
             shouldPause = true;
             if (initialized) player.pauseVideo();
-            return true;
+            return 'true';
         }
 
         function setRate(rate) {
             if (initialized) player.setPlaybackRate(rate);
-            return true;
+            return 'true';
         }
 
         function loadVideo(id) {
